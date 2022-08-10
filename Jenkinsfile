@@ -7,7 +7,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonar_text')
     }
     stages {
-        stage('build') {
+        /*stage('build') {
             agent {
                 docker { image 'openjdk:11-jdk' }
             }
@@ -20,19 +20,19 @@ pipeline {
                     exclusionPattern: 'src/test*'
                 )
             }
-        }
+        }*/
         stage('sonarqube') {
             agent {
                 docker { image 'sonarsource/sonar-scanner-cli' } 
             }
             steps {
                 sh 'echo scanning!'
-                withSonarQubeEnv('sonar_text') {
-                    sh './gradlew sonarqube'
-                }
+                
+                sh './gradlew sonarqube'
+                
             }
         }
-        stage('docker build') {
+        /*stage('docker build') {
             steps {
                 sh 'echo docker build'
                 sh 'docker build -t mshmsudd/sample-spring-boot:latest .'
@@ -47,7 +47,7 @@ pipeline {
                     sh 'docker logout'
                 }
             }
-        }
+        }*/
         stage('Deploy App') {
             steps {
                 sh 'echo deploy to kubernetes'               
