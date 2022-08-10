@@ -4,6 +4,7 @@ pipeline {
         ENV_DOCKER = credentials('dockerhub')
         DOCKERIMAGE = "dummy/dummy"
         EKS_CLUSTER_NAME = "demo-cluster"
+        SONAR_TOKEN = credentials('sonar_text')
     }
     stages {
         stage('build') {
@@ -26,6 +27,9 @@ pipeline {
             }
             steps {
                 sh 'echo scanning!'
+                withSonarQubeEnv('sonar_text') {
+                    sh './gradlew sonarqube'
+                }
             }
         }
         stage('docker build') {
