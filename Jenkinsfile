@@ -1,10 +1,10 @@
 pipeline {
     agent any
-    /**environment {
+    environment {
         ENV_DOCKER = credentials('dockerhub')
         DOCKERIMAGE = "dummy/dummy"
         EKS_CLUSTER_NAME = "demo-cluster"
-    }*/
+    }
     stages {
         stage('build') {
             agent {
@@ -21,9 +21,9 @@ pipeline {
             }
         }
         stage('sonarqube') {
-            /*agent {
-                docker { image '<some sonarcli image>' } 
-            }*/
+            agent {
+                docker { image 'sonarsource/sonar-scanner-cli' } 
+            }
             steps {
                 sh 'echo scanning!'
             }
@@ -31,11 +31,17 @@ pipeline {
         stage('docker build') {
             steps {
                 sh 'echo docker build'
+                sh 'docker build -t mshmsudd/sample-spring-boot:latest .'
             }
         }
         stage('docker push') {
             steps {
-                sh 'echo docker push!'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
+                    sh 'echo docker push!'
+                    sh 'docker login -u ${username} -p ${password}'
+                    sh 'docker push mshmsudd/sample-spring-boot:latest'
+                    sh 'docker logout'
+                }
             }
         }
         stage('Deploy App') {
