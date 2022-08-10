@@ -12,7 +12,12 @@ pipeline {
             }
             steps {
                 sh 'chmod +x gradlew && ./gradlew build jacocoTestReport'
-                publishHTML(target: [reportDir:'build/jacocoHtml', reportFiles: 'index.html', reportName: 'Code Coverage'])
+                jacoco( 
+                    execPattern: 'target/*.exec',
+                    classPattern: 'target/classes',
+                    sourcePattern: 'src/main/java',
+                    exclusionPattern: 'src/test*'
+                )
             }
         }
         stage('sonarqube') {
