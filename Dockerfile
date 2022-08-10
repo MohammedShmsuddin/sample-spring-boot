@@ -8,4 +8,6 @@ USER root
 
 COPY build/libs/spring-boot.jar $APP_LOC/app.jar
 
+EXPOSE 8080
+
 ENTRYPOINT ["java","-jar","app.jar"]
