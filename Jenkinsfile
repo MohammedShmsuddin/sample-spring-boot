@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
     /**environment {
         ENV_DOCKER = credentials('dockerhub')
         DOCKERIMAGE = "dummy/dummy"
@@ -12,6 +12,7 @@ pipeline {
             }
             steps {
                 sh 'chmod +x gradlew && ./gradlew build jacocoTestReport'
+                publishHTML(target: [reportDir:'build/jacocoHtml', reportFiles: 'index.html', reportName: 'Code Coverage'])
             }
         }
         stage('sonarqube') {
