@@ -4,7 +4,7 @@ pipeline {
         ENV_DOCKER = credentials('dockerhub')
         DOCKERIMAGE = "dummy/dummy"
         EKS_CLUSTER_NAME = "demo-cluster"
-        SONAR_TOKEN = credentials('sonar_text')
+        //SONAR_TOKEN = credentials('sonar_text')
     }
     stages {
         /*stage('build') {
