@@ -4,10 +4,10 @@ pipeline {
         ENV_DOCKER = credentials('dockerhub')
         DOCKERIMAGE = "dummy/dummy"
         EKS_CLUSTER_NAME = "demo-cluster"
-        //SONAR_TOKEN = credentials('sonar_text')
+        SONAR_TOKEN = credentials('sonar_text')
     }
     stages {
-        /*stage('build') {
+        stage('build') {
             agent {
                 docker { image 'openjdk:11-jdk' }
             }
@@ -20,7 +20,7 @@ pipeline {
                     exclusionPattern: 'src/test*'
                 )
             }
-        }*/
+        }
         stage('sonarqube') {
             agent {
                 docker { image 'sonarsource/sonar-scanner-cli' } 
