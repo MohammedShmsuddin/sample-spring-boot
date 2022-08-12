@@ -27,9 +27,8 @@ pipeline {
             }
             steps {
                 sh 'echo scanning!'
-                withSonarQubeEnv() {
-                    sh './gradlew sonarqube'
-                }
+                sh './gradlew sonarqube'
+                
                 
             }
         }
