@@ -7,27 +7,29 @@ pipeline {
         SONAR_TOKEN = credentials('sonar_text')
     }
     stages {
-        stage('build') {
+        /**stage('build') {
             agent {
                 docker { image 'openjdk:11-jdk' }
             }
             steps {
                 sh 'chmod +x gradlew && ./gradlew build jacocoTestReport'
-                /**jacoco( 
+                jacoco( 
                     execPattern: 'target/*.exec',
                     classPattern: 'target/classes',
                     sourcePattern: 'src/main/java',
                     exclusionPattern: 'src/test*'
-                )*/
+                )
             }
-        }
+        }*/
         stage('sonarqube') {
             agent {
                 docker { image 'sonarsource/sonar-scanner-cli' } 
             }
             steps {
                 sh 'echo scanning!'
-                sh './gradlew sonarqube'
+                withSonarQubeEnv('SonarCloud') {
+                    sh './gradlew sonarqube'
+                }
                 
                 
             }
