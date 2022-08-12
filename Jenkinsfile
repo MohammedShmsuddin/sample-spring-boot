@@ -7,7 +7,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonar_text')
     }
     stages {
-        /**stage('build') {
+        stage('build') {
             agent {
                 docker { image 'openjdk:11-jdk' }
             }
@@ -20,7 +20,7 @@ pipeline {
                     exclusionPattern: 'src/test*'
                 )
             }
-        }*/
+        }
         stage('sonarqube') {
             agent {
                 docker { image 'sonarsource/sonar-scanner-cli' } 
