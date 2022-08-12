@@ -34,9 +34,9 @@ pipeline {
             }
         }
         stage('Quality gate') {
-           agent {
+           /**agent {
                 docker { image 'sonarsource/sonar-scanner-cli' } 
-           }
+           }*/
            steps {
                 script {
                       timeout(time: 5, unit: 'MINUTES') {
