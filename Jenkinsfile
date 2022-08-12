@@ -13,12 +13,12 @@ pipeline {
             }
             steps {
                 sh 'chmod +x gradlew && ./gradlew build jacocoTestReport'
-                jacoco( 
+                /**jacoco( 
                     execPattern: 'target/*.exec',
                     classPattern: 'target/classes',
                     sourcePattern: 'src/main/java',
                     exclusionPattern: 'src/test*'
-                )
+                )*/
             }
         }
         stage('sonarqube') {
