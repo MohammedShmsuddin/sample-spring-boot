@@ -27,8 +27,11 @@ pipeline {
             }
             steps {
                 sh 'echo scanning!'
-                withSonarQubeEnv('SonarCloud') {
-                    sh './gradlew sonarqube'
+                script{
+                    def scannerHome = tool 'scanner';
+                      withSonarQubeEnv('SonarCloud') {
+                          sh './gradlew sonarqube'
+                      }
                 }
                 
             }
