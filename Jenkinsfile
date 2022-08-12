@@ -27,12 +27,16 @@ pipeline {
             }
             steps {
                 sh 'echo scanning!'
-                
-                sh './gradlew sonarqube'
+                withSonarQubeEnv() {
+                    sh './gradlew sonarqube'
+                }
                 
             }
         }
         stage('Quality gate') {
+           agent {
+                docker { image 'sonarsource/sonar-scanner-cli' } 
+           }
            steps {
                 script {
                       timeout(time: 5, unit: 'MINUTES') {
