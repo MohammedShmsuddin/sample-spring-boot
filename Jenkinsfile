@@ -22,9 +22,9 @@ pipeline {
             }
         }*/
         stage('sonarqube') {
-            /*agent {
+            agent {
                 docker { image 'sonarsource/sonar-scanner-cli' } 
-            }*/
+            }
             steps {
                 sh 'echo scanning!'
                 
@@ -35,15 +35,14 @@ pipeline {
             }
         }
         stage('Quality gate') {
-           /*agent {
+           agent {
                 docker { image 'sonarsource/sonar-scanner-cli' } 
-           }*/
+           }
            steps {
-                script {
-                      timeout(time: 5, unit: 'MINUTES') {
-                        waitForQualityGate abortPipeline: true
-                       }
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
                 }
+                
             }
         }
         /*stage('docker build') {
