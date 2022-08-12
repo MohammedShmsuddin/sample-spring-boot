@@ -27,19 +27,17 @@ pipeline {
             }
             steps {
                 sh 'echo scanning!'
-                script{
-                    def scannerHome = tool 'scanner';
-                      withSonarQubeEnv('SonarCloud') {
-                          sh './gradlew sonarqube'
-                      }
+                
+                withSonarQubeEnv('SonarCloud') {
+                    sh './gradlew sonarqube'  
                 }
                 
             }
         }
         stage('Quality gate') {
-           /**agent {
+           agent {
                 docker { image 'sonarsource/sonar-scanner-cli' } 
-           }*/
+           }
            steps {
                 script {
                       timeout(time: 5, unit: 'MINUTES') {
