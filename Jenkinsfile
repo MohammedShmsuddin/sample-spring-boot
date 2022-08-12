@@ -31,7 +31,6 @@ pipeline {
                     sh './gradlew sonarqube'
                 }
                 
-                
             }
         }
         stage('Quality gate') {
