@@ -7,7 +7,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonar_text')
     }
     stages {
-        stage('build') {
+        /**stage('build') {
             agent {
                 docker { image 'openjdk:11-jdk' }
             }
@@ -41,7 +41,7 @@ pipeline {
                 }
                 
             }
-        }
+        }*/
         /*stage('docker build') {
             steps {
                 sh 'echo docker build'
@@ -61,7 +61,7 @@ pipeline {
         stage('Deploy App') {
             steps {
                 sh 'echo deploy to kubernetes'
-                sh 'kubectl get nodes'               
+                sh 'kubectl cluster-info'               
             }
         }
     }
