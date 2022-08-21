@@ -60,8 +60,10 @@ pipeline {
         }*/
         stage('Deploy App') {
             steps {
-                sh 'echo deploy to kubernetes'
-                sh 'kubectl get nodes'               
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-cred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh 'echo deploy to kubernetes'
+                    sh 'kubectl get nodes'
+                }               
             }
         }
     }
