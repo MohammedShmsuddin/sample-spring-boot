@@ -62,7 +62,7 @@ pipeline {
             steps {
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_cred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh 'echo deploy to kubernetes'
-                    sh 'kubectl version'
+                    sh 'kubectl get nodes'
                 }               
             }
         }
