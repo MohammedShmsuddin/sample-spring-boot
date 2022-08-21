@@ -21,7 +21,7 @@ pipeline {
                 )
             }
         }
-        stage('sonarqube') {
+        stage('sonarqube analysis') {
             agent {
                 docker { image 'sonarsource/sonar-scanner-cli' } 
             }
@@ -60,7 +60,8 @@ pipeline {
         }*/
         stage('Deploy App') {
             steps {
-                sh 'echo deploy to kubernetes'               
+                sh 'echo deploy to kubernetes'
+                sh 'kubectl get nodes'               
             }
         }
     }
