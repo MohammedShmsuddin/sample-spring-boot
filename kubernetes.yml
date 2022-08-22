@@ -2,7 +2,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sample-spring-boot
+  name: sample-spring-boot-deployment
+  labels: 
+      type: back-end
+      env: prod
 spec:
   replicas: 1 # 1 PODs at any given point of time
   selector:
@@ -12,10 +15,12 @@ spec:
     metadata:
       labels:
         app: sample-spring-boot
+        type: back-end
+        env: prod
     spec:
       containers:
         - name: springboot-sample
-          image: <Your Docker Image>:<Your Image Tag>
+          image: mshmsudd/sample-spring-boot:latest
           ports:
             - containerPort: 8080
 ---
@@ -31,5 +36,5 @@ spec:
       targetPort: 8080
       protocol: TCP
   selector:
-    app: sample-spring-boot-app
+    app: sample-spring-boot
   type: LoadBalancer # Type loadbalancer will use the underlying cloud provider to create an external url for accessing the app
