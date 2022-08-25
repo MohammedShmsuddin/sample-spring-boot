@@ -1,4 +1,6 @@
-pipeline {
+// Gradle build
+
+/*pipeline {
     agent any
     environment {
         ENV_DOCKER = credentials('dockerhub')
@@ -66,4 +68,74 @@ pipeline {
             }
         }
     }
+}*/
+
+
+
+// Maven build
+
+pipeline {
+    agent any
+    environment {
+        ENV_DOCKER = credentials('dockerhub')
+        DOCKERIMAGE = "dummy/dummy"
+        EKS_CLUSTER_NAME = "education-eks-jiHD8Gb6"
+        SONAR_TOKEN = credentials('sonar_text')
+    }
+    stages {
+        stage('build') {
+            agent {
+                docker { image 'maven:alpine' }
+            }
+            steps {
+                sh 'mvn install'
+                
+            }
+        }
+        /*stage('sonarqube analysis') {
+            agent {
+                docker { image 'sonarsource/sonar-scanner-cli' } 
+            }
+            steps {
+                sh 'echo scanning!'
+                
+                withSonarQubeEnv('SonarCloud') {
+                    sh './gradlew sonarqube'  
+                }
+                
+            }
+        }
+        stage('Quality gate') {
+           steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+                
+            }
+        }
+        stage('docker build') {
+            steps {
+                sh 'echo docker build'
+                sh 'docker build -t mshmsudd/sample-spring-boot:latest .'
+            }
+        }
+        stage('docker push') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
+                    sh 'echo docker push!'
+                    sh 'docker login -u ${username} -p ${password}'
+                    sh 'docker push mshmsudd/sample-spring-boot:latest'
+                    sh 'docker logout'
+                }
+            }
+        }
+        stage('Deploy App') {
+            steps {
+                sh 'echo deploy to kubernetes'
+                //sh 'kubectl apply -f kubernetes.yml'
+                               
+            }
+        }*/
+    }
 }
+
